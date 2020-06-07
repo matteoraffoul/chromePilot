@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, current_app
 from selenium import webdriver
 import time
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 #Funzioni
 def open_mtv():
@@ -38,10 +38,14 @@ def switch():
         return jsonify(str("Successfully stored  " + str(query)))
     return "ok"
 
+@app.route('/')
+def hello_world():
+    return current_app.send_static_file('index.html')
+
+
 if __name__ == '__main__':
     ch_options = webdriver.ChromeOptions()
     ch_options.debugger_address="127.0.0.1:12345"
     driver = webdriver.Chrome(executable_path="chromedriver.exe", options=ch_options)
     driver.implicitly_wait(10)
-    app.run(host= '0.0.0.0',debug=False,port=8000)
-
+    app.run(host= '0.0.0.0',debug=False,port=80)
