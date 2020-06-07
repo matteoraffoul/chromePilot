@@ -14,26 +14,42 @@
 <div class="container">
     <div class="grid">
         <div class="col-sm-12">
-            <button type="button" id="open" class="btn btn-success btn-lg btn-block mt-4">APRI</button>
+            <button type="button" id="open_mtv" class="btn btn-success btn-lg btn-block mt-4">APRI MTV</button>
         </div>
         <div class="col-sm-12">
-            <button type="button" id="close" class="btn btn-danger btn-lg btn-block mt-1">CHIUDI</button>
+            <button type="button" id="open_noursat" class="btn btn-success btn-lg btn-block mt-2">APRI NOURSAT</button>
         </div>
+        <div class="col-sm-12">
+            <button type="button" id="close" class="btn btn-danger btn-lg btn-block mt-4">CHIUDI</button>
+        </div>
+        
     </div>
 </div>    
 </body>
 <script>
     $(document).ready(function() {
-        $("#open").click(function() {
-            open();
+        $("#open_noursat").click(function() {
+            open_noursat();
+        });
+        $("#open_mtv").click(function() {
+            open_mtv();
         });
         $("#close").click(function() {
             close();
         });
     });
-    function open(){
+    function open_mtv(){
         $.ajax({
-            url: "http://192.168.0.111:80/ventilatore?data=open",
+            url: "http://192.168.0.109:80/open?action=open&channel=mtv",
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+            }
+        });
+    }
+    function open_noursat(){
+        $.ajax({
+            url: "http://192.168.0.109:80/open?action=open&channel=noursat",
             type: 'GET',
             success: function(res) {
                 console.log(res);
@@ -42,7 +58,7 @@
     }
     function close(){
         $.ajax({
-            url: "http://192.168.0.111:80/ventilatore?data=close",
+            url: "http://192.168.0.109:80/close",
             type: 'GET',
             success: function(res) {
                 console.log(res);

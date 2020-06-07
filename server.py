@@ -13,6 +13,14 @@ def open_mtv():
     unmute.click()
     return
 
+def open_noursat():
+    driver.get("https://player.l1vetv.com/noursat1/")
+    start = driver.find_element_by_class_name("vjs-big-play-button")
+    start.click()
+    fullscreen = driver.find_element_by_class_name("vjs-fullscreen-control.vjs-control.vjs-button")
+    fullscreen.click()
+    return
+
 def close():
     driver.execute_script("window.open('https://www.google.it/');")
     driver.switch_to.window(driver.window_handles[0])
@@ -20,22 +28,30 @@ def close():
     driver.switch_to.window(driver.window_handles[0])  
     return
 
+
 # Server Web
-@app.route('/ventilatore', methods=['GET'])
-def switch():
+@app.route('/open', methods=['GET'])
+def open_route():
     if request.method=='GET':
 
-        query = request.args.get('data')
+        action = request.args.get('action')
+        channel = request.args.get('channel')
 
-        if query == "open":
-            open_mtv()
-            return jsonify(str("Mtv Aperto"))
+        if action == "open":
+            if channel == "mtv":
+                open_mtv()
+                return jsonify(str("Mtv Aperto"))
+            if channel == "noursat":
+                open_noursat()
+                return jsonify(str("Noursat Aperto"))
+    return "ok"
+    
 
-        if query == "close":
-            close()
-            return jsonify(str("Chiuso"))
-
-        return jsonify(str("Successfully stored  " + str(query)))
+@app.route('/close', methods=['GET'])
+def close_route():
+    if request.method=='GET':
+        close()
+        return jsonify(str("Chiuso"))
     return "ok"
 
 @app.route('/')
