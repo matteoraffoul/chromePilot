@@ -20,6 +20,12 @@
             <button type="button" id="open_noursat" class="btn btn-success btn-lg btn-block mt-2">APRI NOURSAT</button>
         </div>
         <div class="col-sm-12">
+            <button type="button" id="open_mbc2" class="btn btn-success btn-lg btn-block mt-2">APRI MBC2</button>
+        </div>
+        <div class="col-sm-12">
+            <button type="button" id="open_teleliban" class="btn btn-success btn-lg btn-block mt-2">APRI TELELIBAN</button>
+        </div>
+        <div class="col-sm-12">
             <button type="button" id="close" class="btn btn-danger btn-lg btn-block mt-4">CHIUDI</button>
         </div>
         
@@ -27,6 +33,7 @@
 </div>    
 </body>
 <script>
+    var url = "http://192.168.0.109:80"
     $(document).ready(function() {
         $("#open_noursat").click(function() {
             open_noursat();
@@ -34,13 +41,19 @@
         $("#open_mtv").click(function() {
             open_mtv();
         });
+        $("#open_mbc2").click(function() {
+            open_mbc2();
+        });
+		$("#open_teleliban").click(function() {
+            open_teleliban();
+        });
         $("#close").click(function() {
             close();
         });
     });
     function open_mtv(){
         $.ajax({
-            url: "http://192.168.0.109:80/open?action=open&channel=mtv",
+            url: url + "/open?action=open&channel=mtv",
             type: 'GET',
             success: function(res) {
                 console.log(res);
@@ -49,7 +62,25 @@
     }
     function open_noursat(){
         $.ajax({
-            url: "http://192.168.0.109:80/open?action=open&channel=noursat",
+            url: url + "/open?action=open&channel=noursat",
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+            }
+        });
+    }
+    function open_mbc2(){
+        $.ajax({
+            url: url + "/open?action=open&channel=mbc2",
+            type: 'GET',
+            success: function(res) {
+                console.log(res);
+            }
+        });
+    }
+	function open_teleliban(){
+        $.ajax({
+            url: url + "/open?action=open&channel=teleliban",
             type: 'GET',
             success: function(res) {
                 console.log(res);
@@ -58,7 +89,7 @@
     }
     function close(){
         $.ajax({
-            url: "http://192.168.0.109:80/close",
+            url: url + "/close",
             type: 'GET',
             success: function(res) {
                 console.log(res);
