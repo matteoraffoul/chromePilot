@@ -1,24 +1,23 @@
 from flask import Flask, request, jsonify, render_template, current_app
 from selenium import webdriver
 import time
+import pyautogui
 
 app = Flask(__name__, static_url_path='')
 
 #Funzioni
 def open_mtv():
     driver.get("https://www.mtv.com.lb/vod/en/live")
-    fullscreen = driver.find_element_by_class_name("vjs-fullscreen-control.vjs-control.vjs-button")
-    fullscreen.click()
-    unmute = driver.find_element_by_class_name("vjs-big-unmute-button.vjs-icon-volume-mute")
-    unmute.click()
+    time.sleep(5)
+    pyautogui.press('f')
+    pyautogui.press('m')
     return
 
 def open_noursat():
     driver.get("https://player.l1vetv.com/noursat4/")
-    start = driver.find_element_by_class_name("vjs-big-play-button")
-    start.click()
-    fullscreen = driver.find_element_by_class_name("vjs-fullscreen-control.vjs-control.vjs-button")
-    fullscreen.click()
+    time.sleep(5)
+    pyautogui.press('f')
+    pyautogui.press('m')
     return
 
 def open_mbc2():
@@ -83,6 +82,6 @@ def hello_world():
 if __name__ == '__main__':
     ch_options = webdriver.ChromeOptions()
     ch_options.debugger_address="127.0.0.1:12345"
-    driver = webdriver.Chrome(executable_path="chromedriver.exe", options=ch_options)
+    driver = webdriver.Chrome(executable_path="/home/garot/Scrivania/chromePilot-master/chromedriver", options=ch_options)
     driver.implicitly_wait(10)
     app.run(host= '0.0.0.0',debug=True,port=80)
